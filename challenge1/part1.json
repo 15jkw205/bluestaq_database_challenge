@@ -1,0 +1,63 @@
+{ 
+  "books": {
+    "_comment": "This is the schema for the books collection. We are using references for 'author_id' and 'genre_id' since authors and genres are shared across multiple books.",
+    "collection": "books", 
+    "schema": { 
+      "_id": "ObjectId", 
+      "title": "string", 
+      "author_id": "ObjectId",
+      "_comment_author": "Using a reference for 'author_id' because an author can write multiple books, and this avoids data duplication.", 
+      "genre_id": "ObjectId", 
+      "_comment_genre": "Using a reference for 'genre_id' since many books can belong to the same genre, allowing efficient genre management.", 
+      "published_date": "ISODate", 
+      "summary": "string", 
+      "isbn": "string", 
+      "reviews": [ 
+        { 
+          "_comment_reviews": "Embedding reviews directly within the book document since reviews are tightly coupled with the book. This allows for faster access when fetching a book's details along with its reviews.",
+          "reviewer_name": "string", 
+          "rating", "number", 
+          "comment": "string", 
+          "review_date": "ISODate"
+        }
+      ]
+    }
+  }, 
+  "authors": { 
+    "_comment": "This is the schema for the authors collection. Authors can have multiple books, so we use references to link book to authors.", 
+    "collection": "authors", 
+    "schema": { 
+      "_id": "ObjectId", 
+      "name": "string", 
+      "bio": "string", 
+      "birth_date": "ISODate", 
+      "nationality": "string", 
+      "books_written": ["ObjectId"], 
+      "_comment_books_written": "Using references for 'books_written' because an author can write multiple books, allowing efficient querying of books by author." 
+    }
+  }, 
+  "genres": { 
+    "_comment": "This is the schema for the genres collection. Genres are static entities, so no references or embedding are needed.", 
+    "collection": "genres", 
+    "schema": { 
+      "_id": "ObjectId", 
+      "name": "string", 
+      "description": "string" 
+    } 
+  }, 
+  "reviews": { 
+    "_comment": "This is an optional schema for a separate reviews collection. Use this if you want to manage reviews independently from books.", 
+    "collection": "reviews", 
+    "schema": { 
+      "_id": "ObjectId", 
+      "book_id_: "ObjectId", 
+      "_comment_book_id": "Using a reference for 'book_id' since reviews can be managed separately and linked to specific books.", 
+      "reviewer_name": "string", 
+      "rating": "number", 
+      "comment": "string", 
+      "review_date": "ISODate"
+    }
+  } 
+}
+
+
