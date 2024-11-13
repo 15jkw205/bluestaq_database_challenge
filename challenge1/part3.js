@@ -72,13 +72,13 @@ async function main() {
       { $sort: {booksCount: -1 } }, 
       { $limit: 3 }
     ]).toArray(); 
-    console.log(topAuthors); 
+    console.table(topAuthors); 
 
   } catch (err) { 
     console.error("An error occurred:", err.message); 
   } finally { 
     await client.close(); 
-    console.table("\nConnection closed");
+    console.log("\nConnection closed");
   }
 }
 
