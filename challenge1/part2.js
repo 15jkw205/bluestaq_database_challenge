@@ -1,7 +1,9 @@
 const { MongoClient } = require('mongodb');
 
 // Connection URL and Database Name
-const url = 'mongodb://localhost:27017';
+const user = process.env.MONGODB_USER;
+const password = process.env.MONGODB_PASS;
+const url = `mongodb://${user}:${password}@localhost:27017/bookstore?authSource=bookstore`;
 const dbName = 'bookstore';
 
 // Data
